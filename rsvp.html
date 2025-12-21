@@ -134,12 +134,19 @@
       <button type="submit">Send RSVP</button>
     </form>
 
-    <div id="responseBox" class="response hidden">
-      <p id="responseText"></p>
-      <a href="registry.html" id="registryLink" class="registry-btn hidden">
-        Visit the Registry
-      </a>
-    </div>
+<div id="responseBox" class="response hidden">
+  <p id="responseText"></p>
+
+  <a href="registry.html" id="registryLink" class="registry-btn hidden">
+    Visit the Registry
+  </a>
+
+  <p id="editResponse"
+     style="margin-top: 1.5rem; font-size: 0.9rem; cursor: pointer; text-decoration: underline;">
+    Need to change your response?
+  </p>
+</div>
+
 
   </div>
 </div>
@@ -239,6 +246,15 @@
       registryLink.classList.remove("hidden");
     }
   });
+  const editResponse = document.getElementById("editResponse");
+
+editResponse.addEventListener("click", () => {
+  responseBox.classList.add("hidden");
+  form.classList.remove("hidden");
+  registryLink.classList.add("hidden");
+  contactField.required = false;
+});
+
 </script>
 
 </body>
