@@ -129,7 +129,7 @@
       </div>
 
       <label>Contact (email or phone)</label>
-      <input type="text" required placeholder="So we can send your forest code">
+    <input id="contactField" type="text" placeholder="Required if attending — optional if not">
 
       <button type="submit">Send RSVP</button>
     </form>
@@ -151,7 +151,8 @@
   const responseBox = document.getElementById("responseBox");
   const responseText = document.getElementById("responseText");
   const registryLink = document.getElementById("registryLink");
-
+  const contactField = document.getElementById("contactField");
+  
   const yesMessages = [
     "Thank you for responding. The forest is happy to know you’re coming.",
     "Your path leads here — we’re so glad you’ll be joining us.",
@@ -219,8 +220,10 @@
   ];
 
   attendance.addEventListener("change", () => {
-    yesFields.classList.toggle("hidden", attendance.value !== "yes");
-  });
+  const isYes = attendance.value === "yes";
+  yesFields.classList.toggle("hidden", !isYes);
+  contactField.required = isYes;
+});
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
