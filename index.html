@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
+
     <style>
         * {
             margin: 0;
@@ -37,8 +38,7 @@
             position: relative;
             z-index: 1;
             cursor: pointer;
-        background: url('assets/backgrounds/gate-2.png') center / cover no-repeat;
-
+            background: url('assets/backgrounds/gate-2.png') center / cover no-repeat;
         }
 
         /* Floating text */
@@ -92,6 +92,8 @@
                 70% 30%,
                 40% 60%;
 
+            background-repeat: no-repeat;
+
             animation: drift 60s linear infinite;
             opacity: 0.8;
             filter: drop-shadow(0 0 6px rgba(255,230,150,0.9));
@@ -140,6 +142,6 @@
         });
     </script>
 
-<script src="js/main.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
