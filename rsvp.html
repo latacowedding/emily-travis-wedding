@@ -10,11 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: Georgia, serif;
@@ -33,7 +29,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(10, 10, 10, 0.45);
+      background: rgba(10,10,10,0.45);
       z-index: 1;
     }
 
@@ -53,11 +49,7 @@
       text-shadow: 0 0 18px rgba(243,211,122,0.6);
     }
 
-    label {
-      display: block;
-      margin-top: 1.5rem;
-      margin-bottom: 0.4rem;
-    }
+    label { display: block; margin-top: 1.5rem; margin-bottom: 0.4rem; }
 
     input, select {
       width: 100%;
@@ -79,21 +71,20 @@
       cursor: pointer;
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
     .response {
       margin-top: 2.5rem;
-      padding: 1.8rem;
+      padding: 2rem;
       background: rgba(10,10,10,0.6);
       border-radius: 8px;
       text-align: center;
+      font-size: 1.05rem;
     }
 
     .registry-btn {
       display: inline-block;
-      margin-top: 1.2rem;
+      margin-top: 1.5rem;
       padding: 0.7rem 1.4rem;
       background: #f3d37a;
       color: #0a0a0a;
@@ -103,9 +94,7 @@
     }
 
     @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2rem;
-      }
+      h1 { font-size: 2.2rem; }
     }
   </style>
 </head>
@@ -145,24 +134,11 @@
       <button type="submit">Send RSVP</button>
     </form>
 
-    <div id="yesResponse" class="response hidden">
-      <p>
-        Thank you for responding.  
-        The forest is happy to know you’re coming.
-      </p>
-      <p>
-        Emily will send your forest code soon.
-      </p>
-    </div>
-
-    <div id="noResponse" class="response hidden">
-      <p>
-        The forest will miss you, but we’re grateful you answered.
-      </p>
-      <p>
-        Thank you for being part of our story.
-      </p>
-      <a href="registry.html" class="registry-btn">Visit the Registry</a>
+    <div id="responseBox" class="response hidden">
+      <p id="responseText"></p>
+      <a href="registry.html" id="registryLink" class="registry-btn hidden">
+        Visit the Registry
+      </a>
     </div>
 
   </div>
@@ -172,8 +148,75 @@
   const attendance = document.getElementById("attendance");
   const yesFields = document.getElementById("yesFields");
   const form = document.getElementById("rsvpForm");
-  const yesResponse = document.getElementById("yesResponse");
-  const noResponse = document.getElementById("noResponse");
+  const responseBox = document.getElementById("responseBox");
+  const responseText = document.getElementById("responseText");
+  const registryLink = document.getElementById("registryLink");
+
+  const yesMessages = [
+    "Thank you for responding. The forest is happy to know you’re coming.",
+    "Your path leads here — we’re so glad you’ll be joining us.",
+    "The forest stirs with excitement knowing you’ll be there.",
+    "We’re smiling already. Thank you for saying yes.",
+    "Your presence means more to us than we can say.",
+    "The lanterns will be lit for you.",
+    "We’re so grateful you’ll be part of our day.",
+    "The forest welcomes you with open arms.",
+    "It means the world to us that you’ll be there.",
+    "Your yes is a gift. Thank you for sharing it with us.",
+    "The forest hums a little brighter knowing you’re coming.",
+    "Your footsteps are already part of the path.",
+    "This place feels warmer knowing you’ll be here.",
+    "We can’t wait to celebrate together.",
+    "Your presence is already felt.",
+    "A space has been waiting for you.",
+    "We’re honored you’ll be joining us.",
+    "The day will be better because you’re there.",
+    "Your yes means everything to us.",
+    "We’re counting down already.",
+    "Thank you for being part of our story.",
+    "We’re so thankful for you.",
+    "We can’t imagine the day without you.",
+    "Your response brought us so much joy.",
+    "We’re thrilled you’ll be there.",
+    "The forest is ready to welcome you.",
+    "We’re grateful beyond words.",
+    "Your yes made us smile.",
+    "This celebration wouldn’t be the same without you.",
+    "We’re so glad you’re coming."
+  ];
+
+  const noMessages = [
+    "The forest will miss you, but we’re grateful you answered.",
+    "Thank you for letting us know — it truly means a lot.",
+    "Though our paths won’t cross that day, we’re thankful for you.",
+    "Your response matters more than you know.",
+    "We’ll miss you, but we appreciate you taking the time to reply.",
+    "Thank you for being part of our story, always.",
+    "The forest understands, and so do we.",
+    "We’re grateful you shared your answer with us.",
+    "Though you won’t be there, you’re still very much in our hearts.",
+    "Thank you for responding with honesty and care.",
+    "We’ll miss celebrating with you, but we’re thankful for your love.",
+    "Your presence will be felt even from afar.",
+    "Thank you for taking a moment to reply.",
+    "The forest sends its love your way.",
+    "We’re thankful for you, always.",
+    "Though you won’t attend, your response means everything.",
+    "We appreciate you letting us know.",
+    "We’ll miss you, but we understand completely.",
+    "Thank you for being thoughtful and kind.",
+    "Your honesty is appreciated more than you know.",
+    "We’re sending love and gratitude your way.",
+    "Thank you for being part of our lives.",
+    "We’ll celebrate together another time.",
+    "Your response is received with love.",
+    "Thank you for sharing your answer with us.",
+    "The forest holds no hard feelings, only gratitude.",
+    "We appreciate you taking the time.",
+    "Thank you for your care and consideration.",
+    "We’ll miss you, but we’re thankful for you.",
+    "Always grateful for your love and support."
+  ];
 
   attendance.addEventListener("change", () => {
     yesFields.classList.toggle("hidden", attendance.value !== "yes");
@@ -182,11 +225,13 @@
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     form.classList.add("hidden");
+    responseBox.classList.remove("hidden");
 
     if (attendance.value === "yes") {
-      yesResponse.classList.remove("hidden");
+      responseText.textContent = yesMessages[Math.floor(Math.random() * yesMessages.length)];
     } else {
-      noResponse.classList.remove("hidden");
+      responseText.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
+      registryLink.classList.remove("hidden");
     }
   });
 </script>
