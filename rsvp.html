@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,24 +24,24 @@
 
     .forest {
       min-height: 100vh;
-background: url("assets/assets/backgrounds/insidegate.png") center / cover no-repeat;
+      background: url("assets/assets/backgrounds/insidegate.png") center / cover no-repeat;
       position: relative;
       padding: 5rem 1.5rem;
     }
 
-.forest::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(10,10,10,0.25) 0%,
-      rgba(10,10,10,0.45) 60%,
-      rgba(10,10,10,0.6) 100%
-    );
-  z-index: 1;
-}
+    .forest::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(10,10,10,0.25) 0%,
+          rgba(10,10,10,0.45) 60%,
+          rgba(10,10,10,0.6) 100%
+        );
+      z-index: 1;
+    }
 
     .content {
       position: relative;
@@ -78,6 +79,11 @@ background: url("assets/assets/backgrounds/insidegate.png") center / cover no-re
       border-radius: 6px;
       font-size: 1.1rem;
       cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .hidden { display: none; }
@@ -138,52 +144,43 @@ background: url("assets/assets/backgrounds/insidegate.png") center / cover no-re
       </div>
 
       <label>Contact (email or phone)</label>
-    <input id="contactField" type="text" placeholder="Required if attending — optional if not">
+      <input id="contactField" type="text" placeholder="Required if attending — optional if not">
 
       <button type="submit">Send RSVP</button>
     </form>
 
-<div id="responseBox" class="response hidden">
-  <p id="responseText"></p>
+    <div id="responseBox" class="response hidden">
+      <p id="responseText"></p>
 
-<p id="responseText"></p>
+      <div id="codeSection" style="margin-top: 1.8rem;">
+        <p style="margin-bottom: 0.4rem;">Have a forest code?</p>
+        <input id="forestCodeInput" type="text" placeholder="Enter your code">
+        <button id="forestCodeButton" style="margin-top: 0.8rem;">Enter</button>
+        <p id="codeMessage" style="margin-top: 1rem; font-size: 0.95rem;"></p>
+        <p id="unlockStatus" style="margin-top: 0.6rem; font-size: 0.85rem; opacity: 0.8;"></p>
+      </div>
 
-<div id="codeSection" style="margin-top: 1.8rem;">
-  <p style="margin-bottom: 0.4rem;">Have a forest code?</p>
-  <input type="text" placeholder="Enter your code">
-  <button style="margin-top: 0.8rem;">Enter</button>
-</div>
+      <a href="registry.html" id="registryLink" class="registry-btn hidden">
+        Visit the Registry
+      </a>
 
-<a href="registry.html" id="registryLink" class="registry-btn hidden">
-  Visit the Registry
-</a>
+      <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; font-size: 0.9rem;">
+        <span id="editResponse" style="cursor: pointer; text-decoration: underline;">
+          Need to update your response?
+        </span>
 
-
-<div id="portal" class="hidden" style="margin-top: 2rem;">
-  <p style="margin-bottom: 0.6rem;">Enter your forest code</p>
-  <input id="portalCode" type="text" placeholder="Invitation code">
-  <button id="enterForest" style="margin-top: 1rem;">Enter</button>
-  <p id="portalMessage" style="margin-top: 1rem; font-size: 0.9rem;"></p>
-</div>
-
-
-<div style="margin-top: 1.5rem; display: flex; justify-content: space-between; font-size: 0.9rem;">
-  <span id="editResponse"
-        style="cursor: pointer; text-decoration: underline;">
-    Need to update your response?
-  </span>
-
- <span style="text-decoration: underline; opacity: 0.6; cursor: default;"
-      title="Available after entering your forest code">
-  Simple Mode
-   Phone Friendly!
-</span>
-
+        <span style="text-decoration: underline; opacity: 0.6; cursor: default;"
+              title="Available after entering your forest code">
+          Simple Mode · Phone Friendly
+        </span>
+      </div>
+    </div>
 
   </div>
 </div>
 
 <script>
+  // ===== RSVP FORM LOGIC =====
   const attendance = document.getElementById("attendance");
   const yesFields = document.getElementById("yesFields");
   const form = document.getElementById("rsvpForm");
@@ -191,80 +188,78 @@ background: url("assets/assets/backgrounds/insidegate.png") center / cover no-re
   const responseText = document.getElementById("responseText");
   const registryLink = document.getElementById("registryLink");
   const contactField = document.getElementById("contactField");
-  
-  const yesMessages = [
-  "A lantern just flickered on somewhere — we’re glad it’s for you.",
-  "We’re really excited to have you there. Truly.",
-  "This celebration feels more complete knowing you’re coming.",
-  "Some paths are better shared. Thanks for walking this one with us.",
-  "We’re looking forward to celebrating with you under the trees.",
-  "This day already feels warmer knowing you’ll be part of it.",
-  "We’re glad our paths cross here.",
-  "Your spot is waiting.",
-  "This made us pause and smile.",
-  "We’re excited to welcome you into this little moment of magic.",
-  "The evening will be better with you there.",
-  "We’re happy you’ll be joining us for this.",
-  "This feels right. Thank you for coming.",
-  "We’re genuinely excited to celebrate together.",
-  "You belong at this table, under these lights.",
-  "We’re thankful you’ll be there to share the day.",
-  "This gathering wouldn’t feel the same without you.",
-  "We’re so glad you can make it.",
-  "A quiet little cheer happened when we saw your response.",
-  "We’re happy to be celebrating with you.",
-  "This moment feels brighter knowing you’re part of it.",
-  "We can’t wait to see you there.",
-  "Your presence adds something special to the day.",
-  "We’re really looking forward to this with you.",
-  "This celebration just gained a little more heart.",
-  "We’re glad you’ll be there when it happens.",
-  "Thanks for joining us for this chapter.",
-  "This day will hold a place for you.",
-  "We’re grateful you’ll be celebrating alongside us.",
-  "We’re so happy you’re coming."
-];
 
+  const yesMessages = [
+    "A lantern just flickered on somewhere — we’re glad it’s for you.",
+    "We’re really excited to have you there. Truly.",
+    "This celebration feels more complete knowing you’re coming.",
+    "Some paths are better shared. Thanks for walking this one with us.",
+    "We’re looking forward to celebrating with you under the trees.",
+    "This day already feels warmer knowing you’ll be part of it.",
+    "We’re glad our paths cross here.",
+    "Your spot is waiting.",
+    "This made us pause and smile.",
+    "We’re excited to welcome you into this little moment of magic.",
+    "The evening will be better with you there.",
+    "We’re happy you’ll be joining us for this.",
+    "This feels right. Thank you for coming.",
+    "We’re genuinely excited to celebrate together.",
+    "You belong at this table, under these lights.",
+    "We’re thankful you’ll be there to share the day.",
+    "This gathering wouldn’t feel the same without you.",
+    "We’re so glad you can make it.",
+    "A quiet little cheer happened when we saw your response.",
+    "We’re happy to be celebrating with you.",
+    "This moment feels brighter knowing you’re part of it.",
+    "We can’t wait to see you there.",
+    "Your presence adds something special to the day.",
+    "We’re really looking forward to this with you.",
+    "This celebration just gained a little more heart.",
+    "We’re glad you’ll be there when it happens.",
+    "Thanks for joining us for this chapter.",
+    "This day will hold a place for you.",
+    "We’re grateful you’ll be celebrating alongside us.",
+    "We’re so happy you’re coming."
+  ];
 
   const noMessages = [
-  "Thank you for letting us know — we appreciate it.",
-  "We’ll miss you, but we’re glad you took the time to respond.",
-  "Thanks for answering — it truly helps.",
-  "We understand completely. Thank you for replying.",
-  "We appreciate you letting us know either way.",
-  "Though you won’t be there, we’re still thankful for you.",
-  "Thanks for the response — it means a lot.",
-  "We’ll miss seeing you, but we understand.",
-  "Thank you for taking a moment to reply.",
-  "We appreciate the honesty and the care.",
-  "Thanks for keeping us in the loop.",
-  "We’re grateful you shared your answer with us.",
-  "We’ll miss you, but we understand this season of life.",
-  "Thank you for responding — truly.",
-  "We appreciate you letting us know.",
-  "Thanks for the heads-up.",
-  "We’re thankful you took the time to answer.",
-  "We’ll miss you, but we’re glad you reached out.",
-  "Thank you for replying so thoughtfully.",
-  "We understand, and we appreciate the response.",
-  "Thanks for letting us know what works for you.",
-  "We’ll be thinking of you that day.",
-  "Thank you for responding with care.",
-  "We appreciate you taking a moment for us.",
-  "We’ll miss celebrating with you, but we understand.",
-  "Thank you for the reply — it means more than you know.",
-  "We’re grateful you answered either way.",
-  "Thanks for keeping us informed.",
-  "We appreciate your response.",
-  "Sending thanks your way."
-];
-
+    "Thank you for letting us know — we appreciate it.",
+    "We’ll miss you, but we’re glad you took the time to respond.",
+    "Thanks for answering — it truly helps.",
+    "We understand completely. Thank you for replying.",
+    "We appreciate you letting us know either way.",
+    "Though you won’t be there, we’re still thankful for you.",
+    "Thanks for the response — it means a lot.",
+    "We’ll miss seeing you, but we understand.",
+    "Thank you for taking a moment to reply.",
+    "We appreciate the honesty and the care.",
+    "Thanks for keeping us in the loop.",
+    "We’re grateful you shared your answer with us.",
+    "We’ll miss you, but we understand this season of life.",
+    "Thank you for responding — truly.",
+    "We appreciate you letting us know.",
+    "Thanks for the heads-up.",
+    "We’re thankful you took the time to answer.",
+    "We’ll miss you, but we’re glad you reached out.",
+    "Thank you for replying so thoughtfully.",
+    "We understand, and we appreciate the response.",
+    "Thanks for letting us know what works for you.",
+    "We’ll be thinking of you that day.",
+    "Thank you for responding with care.",
+    "We appreciate you taking a moment for us.",
+    "We’ll miss celebrating with you, but we understand.",
+    "Thank you for the reply — it means more than you know.",
+    "We’re grateful you answered either way.",
+    "Thanks for keeping us informed.",
+    "We appreciate your response.",
+    "Sending thanks your way."
+  ];
 
   attendance.addEventListener("change", () => {
-  const isYes = attendance.value === "yes";
-  yesFields.classList.toggle("hidden", !isYes);
-  contactField.required = isYes;
-});
+    const isYes = attendance.value === "yes";
+    yesFields.classList.toggle("hidden", !isYes);
+    contactField.required = isYes;
+  });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -278,15 +273,125 @@ background: url("assets/assets/backgrounds/insidegate.png") center / cover no-re
       registryLink.classList.remove("hidden");
     }
   });
-  const editResponse = document.getElementById("editResponse");
 
-editResponse.addEventListener("click", () => {
-  responseBox.classList.add("hidden");
-  form.classList.remove("hidden");
-  registryLink.classList.add("hidden");
-  contactField.required = false;
-});
+  document.getElementById("editResponse").addEventListener("click", () => {
+    responseBox.classList.add("hidden");
+    form.classList.remove("hidden");
+    registryLink.classList.add("hidden");
+    contactField.required = false;
+  });
 
+  // ===== FOREST CODE SYSTEM (50 CODES + ESCALATION + STATUS + LOCKOUT) =====
+  const UNLOCK_KEY = "forestUnlocked";
+  const ATTEMPT_KEY = "forestAttempts";
+  const LOCKOUT_KEY = "forestLockoutUntil";
+
+  // 50 placeholder guest codes: FOREST001 ... FOREST050
+  const VALID_CODES = Array.from({ length: 50 }, (_, i) => `FOREST${String(i + 1).padStart(3, "0")}`);
+
+  const codeInput = document.getElementById("forestCodeInput");
+  const codeButton = document.getElementById("forestCodeButton");
+  const codeMessage = document.getElementById("codeMessage");
+  const unlockStatus = document.getElementById("unlockStatus");
+
+  let attempts = Number(sessionStorage.getItem(ATTEMPT_KEY)) || 0;
+
+  const tiers = [
+    { max: 2, messages: [
+      "Are you sure you put the code in correctly?",
+      "That doesn’t seem to be the right code. Try again.",
+      "Close the tabs for a sec and retype it slowly.",
+      "Check for extra spaces. The forest is picky.",
+      "Try again — codes are case-sensitive."
+    ]},
+    { max: 5, messages: [
+      "The forest pauses… then says no.",
+      "That invitation doesn’t open this door.",
+      "A fairy double-checks the list.",
+      "The lantern flickers… then goes dark.",
+      "The gate remains unimpressed."
+    ]},
+    { max: 9, messages: [
+      "Go back and check the message Emily sent you.",
+      "That’s not the code you were given.",
+      "Bestie… reread the text. It’s right there.",
+      "Try copying it exactly as it was sent.",
+      "The forest suggests: check your messages."
+    ]},
+    { max: 19, messages: [
+      "The forest is starting to ask questions.",
+      "This feels… persistent.",
+      "Are you sure this invitation was meant for you?",
+      "The gate is confused by your commitment.",
+      "At this point, we’re concerned (but supportive).",
+      "Okay. Deep breath. Go verify the code."
+    ]},
+    { max: Infinity, messages: [
+      "Girl… are you even invited?!",
+      "Who told you to come??????",
+      "Why the FUCK are you trying so hard to get in? Are YOU okay?",
+      "This door has been tried. Repeatedly.",
+      "The forest has summoned a therapist.",
+      "📍 Locating emotional support professional…",
+      "At this point, we need you to go drink water and check your texts."
+    ]}
+  ];
+
+  function pickMessage(count) {
+    for (const tier of tiers) {
+      if (count <= tier.max) {
+        return tier.messages[Math.floor(Math.random() * tier.messages.length)];
+      }
+    }
+    return "No.";
+  }
+
+  function setLockoutUI() {
+    const lockoutUntil = Number(sessionStorage.getItem(LOCKOUT_KEY)) || 0;
+    if (Date.now() < lockoutUntil) {
+      codeButton.disabled = true;
+      codeMessage.textContent = "Okay. Pause. The forest has locked itself for a few minutes.";
+      return true;
+    }
+    codeButton.disabled = false;
+    return false;
+  }
+
+  // Already unlocked indicator
+  if (sessionStorage.getItem(UNLOCK_KEY) === "true") {
+    unlockStatus.textContent = "The forest is already open to you.";
+  }
+
+  // If currently locked out, disable button
+  setLockoutUI();
+
+  codeButton.addEventListener("click", () => {
+    // Respect lockout
+    if (setLockoutUI()) return;
+
+    const entered = codeInput.value.trim().toUpperCase();
+
+    if (VALID_CODES.includes(entered)) {
+      sessionStorage.setItem(UNLOCK_KEY, "true");
+      sessionStorage.removeItem(ATTEMPT_KEY);
+      sessionStorage.removeItem(LOCKOUT_KEY);
+      window.location.href = "landing.html";
+      return;
+    }
+
+    // Wrong code path
+    attempts++;
+    sessionStorage.setItem(ATTEMPT_KEY, attempts);
+
+    // Escalate message
+    codeMessage.textContent = pickMessage(attempts);
+
+    // Lockout after 30 failed attempts (5 minutes)
+    if (attempts >= 30) {
+      sessionStorage.setItem(LOCKOUT_KEY, Date.now() + (5 * 60 * 1000));
+      setLockoutUI();
+    }
+  });
 </script>
 
 <script src="js/main.js"></script>
