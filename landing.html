@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: url("assets/assets/backgrounds/landing.png") center / cover no-repeat;
+      color: #e8e1c7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Georgia, serif;
+      text-align: center;
+    }
+    .center-text {
+      font-size: 1.8rem;
+      line-height: 1.6;
+    }
+    .sub {
+      font-size: 1.2rem;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="center-text">
+    <div>You are welcome here.</div>
+    <div class="sub">The forest awaits.</div>
+  </div>
+
+  <script>
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        window.location.href = "details.html"; // change later if needed
+      }
+    });
+  </script>
+
+</body>
+</html>
