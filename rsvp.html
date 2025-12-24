@@ -120,34 +120,37 @@
 
     <h1>RSVP</h1>
 
-    <form id="rsvpForm">
-      <label>Guest name(s)</label>
-      <input type="text" required>
+    <form id="rsvpForm" action="https://formspree.io/f/xpqaerky" method="POST">
 
-      <label>Will you attend?</label>
-      <select id="attendance" required>
-        <option value="">Select</option>
-        <option value="yes">Yes, with joy</option>
-        <option value="no">Regretfully, no</option>
-      </select>
+  <label>Guest name(s)</label>
+  <input type="text" name="guests" required>
 
-      <div id="yesFields" class="hidden">
-        <label>Plus one?</label>
-        <select>
-          <option value="">Select</option>
-          <option>No</option>
-          <option>Yes</option>
-        </select>
+  <label>Will you attend?</label>
+  <select id="attendance" name="attendance" required>
+    <option value="">Select</option>
+    <option value="yes">Yes, with joy</option>
+    <option value="no">Regretfully, no</option>
+  </select>
 
-        <label>Number of children attending</label>
-        <input type="number" min="0" max="6" value="0">
-      </div>
+  <div id="yesFields" class="hidden">
+    <label>Plus one?</label>
+    <select name="plus_one">
+      <option value="">Select</option>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
 
-      <label>Contact (email or phone)</label>
-      <input id="contactField" type="text" placeholder="Required if attending — optional if not">
+    <label>Number of children attending</label>
+    <input type="number" name="children" min="0" max="6" value="0">
+  </div>
 
-      <button type="submit">Send RSVP</button>
-    </form>
+  <label>Contact (email or phone)</label>
+  <input id="contactField" name="contact" type="text"
+         placeholder="Required if attending — optional if not">
+
+  <button type="submit">Send RSVP</button>
+</form>
+
 
     <div id="responseBox" class="response hidden">
       <p style="opacity:0.9; margin-bottom:0.8rem;">
@@ -265,7 +268,6 @@
   });
 
   form.addEventListener("submit", (e) => {
-    e.preventDefault();
     form.classList.add("hidden");
     responseBox.classList.remove("hidden");
 
