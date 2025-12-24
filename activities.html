@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emily & Travis — Activities</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Georgia, serif;
+      background: #0a0a0a;
+      color: #e8e1c7;
+    }
+
+    /* Forest background with overlay */
+    .forest {
+      min-height: 100vh;
+      background: url("assets/assets/backgrounds/insidegate.png") center / cover no-repeat;
+      position: relative;
+      padding: 5rem 1.5rem;
+    }
+
+    .forest::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.5);
+      z-index: 1;
+    }
+
+    /* Floating fairies */
+    .fairies {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .fairy {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 8px rgba(255, 230, 150, 0.6));
+    }
+
+    .fairy img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .fairy-1 {
+      top: 10%;
+      right: 8%;
+      animation: float1 14s ease-in-out infinite;
+    }
+
+    .fairy-2 {
+      bottom: 15%;
+      left: 10%;
+      width: 60px;
+      height: 60px;
+      animation: float2 11s ease-in-out infinite 3s;
+    }
+
+    .fairy-3 {
+      top: 50%;
+      left: 5%;
+      width: 55px;
+      height: 55px;
+      animation: float3 13s ease-in-out infinite 6s;
+    }
+
+    @keyframes float1 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      33% {
+        transform: translate(-25px, 30px) rotate(4deg);
+      }
+      66% {
+        transform: translate(20px, -35px) rotate(-3deg);
+      }
+    }
+
+    @keyframes float2 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      50% {
+        transform: translate(30px, -45px) rotate(-5deg);
+      }
+    }
+
+    @keyframes float3 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      33% {
+        transform: translate(-30px, -20px) rotate(3deg);
+      }
+      66% {
+        transform: translate(25px, 30px) rotate(-4deg);
+      }
+    }
+
+    /* Content container */
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-family: 'Delius Swash Caps', cursive;
+      color: #f3d37a;
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      text-shadow: 
+        0 0 18px rgba(243,211,122,0.6),
+        0 0 30px rgba(243,211,122,0.4);
+    }
+
+    .intro {
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #d4c5a0;
+    }
+
+    /* Activity cards */
+    .activity {
+      background: rgba(10,10,10,0.7);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(243, 211, 122, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .activity:hover {
+      background: rgba(10,10,10,0.85);
+      border-color: rgba(243, 211, 122, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(243, 211, 122, 0.15);
+    }
+
+    .activity h2 {
+      font-family: 'Delius Swash Caps', cursive;
+      font-size: 1.5rem;
+      color: #f3d37a;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 10px rgba(243,211,122,0.3);
+    }
+
+    .activity p {
+      line-height: 1.7;
+      color: #e8e1c7;
+      text-align: left;
+    }
+
+    /* Sparkle accent */
+    .activity::before {
+      content: '✨';
+      position: absolute;
+      margin-left: -1.5rem;
+      margin-top: -0.2rem;
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .forest {
+        padding: 4rem 1.2rem;
+      }
+      .activity {
+        padding: 1.5rem;
+      }
+      .fairy {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="fairies">
+  <div class="fairy fairy-1">
+    <img src="assets/assets/fairies/fairy3.png" alt="Fairy">
+  </div>
+  <div class="fairy fairy-2">
+    <img src="assets/assets/fairies/fairy4.png" alt="Fairy">
+  </div>
+  <div class="fairy fairy-3">
+    <img src="assets/assets/fairies/fairy5.png" alt="Fairy">
+  </div>
+</div>
+
+<div class="forest">
+  <div class="content">
+
+    <h1>Forest Activities</h1>
+
+    <p class="intro">
+      Instead of a traditional dance floor, we're creating a day where you can
+      wander, join in, or simply rest — whatever feels right to you.
+    </p>
+
+    <!-- ACTIVITY LIST START -->
+    <!-- Add, remove, or change activities here as ideas come up -->
+
+    <div class="activity">
+      <h2>Placeholder Activity</h2>
+      <p>
+        This is just a placeholder. Replace or delete it when a real idea shows up.
+      </p>
+    </div>
+
+    <!-- BABE PUT NEW IDEAS BELOW THIS LINE -->
+
+    <!-- ACTIVITY LIST END -->
+
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
