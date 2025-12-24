@@ -311,8 +311,19 @@ form.addEventListener("submit", async (e) => {
   const ATTEMPT_KEY = "forestAttempts";
   const LOCKOUT_KEY = "forestLockoutUntil";
 
-  // 50 placeholder guest codes: FOREST001 ... FOREST050
-  const VALID_CODES = Array.from({ length: 50 }, (_, i) => `FOREST${String(i + 1).padStart(3, "0")}`);
+const VALID_CODES = {
+  "PLACEHOLDER1": "Guest 1",
+  "PLACEHOLDER2": "Guest 2",
+  "PLACEHOLDER3": "Guest 3",
+  "PLACEHOLDER4": "Guest 4",
+  "PLACEHOLDER5": "Guest 5",
+  "PLACEHOLDER6": "Guest 6",
+  "PLACEHOLDER7": "Guest 7",
+  "PLACEHOLDER8": "Guest 8",
+  "PLACEHOLDER9": "Guest 9",
+  "PLACEHOLDER10": "Guest 10",
+  "TACOSTESTCODE": "Taco Test"
+};
 
   const codeInput = document.getElementById("forestCodeInput");
   const codeButton = document.getElementById("forestCodeButton");
@@ -390,33 +401,35 @@ form.addEventListener("submit", async (e) => {
   // If currently locked out, disable button
   setLockoutUI();
 
-  codeButton.addEventListener("click", () => {
-    // Respect lockout
-    if (setLockoutUI()) return;
+codeButton.addEventListener("click", () => {
+  // Respect lockout
+  if (setLockoutUI()) return;
 
-    const entered = codeInput.value.trim().toUpperCase();
+  const entered = codeInput.value.trim().toUpperCase();
 
-    if (VALID_CODES.includes(entered)) {
-      sessionStorage.setItem(UNLOCK_KEY, "true");
-      sessionStorage.removeItem(ATTEMPT_KEY);
-      sessionStorage.removeItem(LOCKOUT_KEY);
-      window.location.href = "landing.html";
-      return;
-    }
+  // ✅ Correct code path
+if (VALID_CODES[entered]) {
+  sessionStorage.setItem(UNLOCK_KEY, "true");
+  sessionStorage.setItem("guestName", VALID_CODES[entered]); // 👈 ADD THIS
+  sessionStorage.removeItem(ATTEMPT_KEY);
+  sessionStorage.removeItem(LOCKOUT_KEY);
+  window.location.href = "landing.html";
+  return;
+}
 
-    // Wrong code path
-    attempts++;
-    sessionStorage.setItem(ATTEMPT_KEY, attempts);
+  // ❌ Wrong code path (your escalation + lockout stays exactly the same)
+  attempts++;
+  sessionStorage.setItem(ATTEMPT_KEY, attempts);
 
-    // Escalate message
-    codeMessage.textContent = pickMessage(attempts);
+  codeMessage.textContent = pickMessage(attempts);
 
-    // Lockout after 30 failed attempts (5 minutes)
-    if (attempts >= 30) {
-      sessionStorage.setItem(LOCKOUT_KEY, Date.now() + (5 * 60 * 1000));
-      setLockoutUI();
-    }
-  });
+  // Lockout after 30 failed attempts (5 minutes)
+  if (attempts >= 30) {
+    sessionStorage.setItem(LOCKOUT_KEY, Date.now() + (5 * 60 * 1000));
+    setLockoutUI();
+  }
+});
+
 </script>
 
 <script src="js/main.js"></script>
