@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Emily & Travis — RSVP</title>
-
+  <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
@@ -407,7 +407,8 @@ codeButton.addEventListener("click", () => {
   // ✅ Correct code path
 if (VALID_CODES[entered]) {
   sessionStorage.setItem(UNLOCK_KEY, "true");
-  sessionStorage.setItem("guestName", VALID_CODES[entered]); // 👈 ADD THIS
+  sessionStorage.setItem("rsvpAccess", "true"); // portal access
+  sessionStorage.setItem("guestName", VALID_CODES[entered]);
   sessionStorage.removeItem(ATTEMPT_KEY);
   sessionStorage.removeItem(LOCKOUT_KEY);
   window.location.href = "landing.html";
