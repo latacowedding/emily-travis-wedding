@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emily & Travis — Enter the Forest</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            overflow: hidden;
+            background: #0a0a0a;
+        }
+
+        /* Fairy silhouette */
+        :root {
+            --fairy-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 14c2-3 6-6 10-6-2 4-5 8-8 10 3 0 6 1 8 3-4 2-8 2-10 1-2 3-4 6-8 8 0-4 1-8 2-10-3 1-7 1-10-1 3-2 6-3 8-3-3-2-6-6-8-10 4 0 8 3 10 6z' fill='rgba(255,255,255,0.85)'/%3E%3C/svg%3E");
+        }
+
+        /* Gate background */
+        .gate-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
+        background: url('assets/assets/backgrounds/gate-2.png') center / cover no-repeat;
+        }
+
+        /* Floating text */
+        .gate-overlay {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .gate-text {
+            font-family: 'Delius Swash Caps', cursive;
+            color: #f3d37a;
+            font-size: 3.5rem;
+            text-shadow:
+                0 0 12px rgba(243, 211, 122, 0.8),
+                0 0 30px rgba(243, 211, 122, 0.6);
+            margin-bottom: 0.4rem;
+        }
+
+        .tap-text {
+            color: #e8e1c7;
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+/* Fairies */
+.fairies {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.fairy {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 10px rgba(255, 230, 150, 0.7));
+}
+
+.fairy img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.fairy-main {
+    top: 20%;
+    right: 15%;
+    animation: fly1 22s linear infinite;
+}
+
+.fairy-extra {
+    bottom: 25%;
+    left: 12%;
+    width: 80px;
+    height: 80px;
+    animation: fly2 26s linear infinite;
+}
+
+@keyframes fly1 {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(-20vw, 10vh) rotate(5deg); }
+    50%  { transform: translate(-40vw, -15vh) rotate(-5deg); }
+    75%  { transform: translate(-15vw, -30vh) rotate(3deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes fly2 {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    30%  { transform: translate(25vw, -20vh) rotate(-6deg); }
+    60%  { transform: translate(40vw, 15vh) rotate(6deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .gate-text {
+                font-size: 2.2rem;
+            }
+            .tap-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="fairies">
+    <div class="fairy fairy-main">
+        <img src="assets/assets/fairies/maingatefairy.png" alt="Gate Fairy">
+    </div>
+    <div class="fairy fairy-extra">
+        <img src="assets/assets/fairies/fairy1.png" alt="Fairy">
+    </div>
+</div>
+    <div class="gate-container" id="gateContainer">
+        <div class="gate-overlay">
+            <div class="gate-text">Emily &amp; Travis</div>
+            <div class="tap-text">Tap to Enter the Forest</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('gateContainer').addEventListener('click', () => {
+            window.location.href = 'rsvp.html';
+        });
+    </script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
