@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome</title>
+  <style>
+    :root {
+      --menu-width: 420px;
+      --gold: rgba(214, 178, 92, 0.95);
+      --text-light: #e8e1c7;
+      --menu-text: #1b1a16;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: url("assets/assets/backgrounds/landing.png") center / cover no-repeat;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Georgia, serif;
+      text-align: center;
+      overflow-x: hidden;
+      flex-direction: column;
+    }
+
+    .center-text {
+      font-size: 1.8rem;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 700px;
+    }
+
+    .sub {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      margin-top: 6px;
+    }
+
+    /* COUNTDOWN */
+
+    #forest-countdown {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 125px;
+    }
+
+
+
+    .time-block span {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--text-light);
+      text-shadow: 0 0 8px rgba(255,255,255,0.35);
+    }
+
+    .time-block label {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      opacity: 0.85;
+    }
+
+    /* MENU BUTTON */
+
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      cursor: pointer;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(232,225,199,0.6);
+      background: rgba(20,18,14,0.6);
+      color: var(--text-light);
+      font-size: 1rem;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .menu-toggle:hover {
+      background: rgba(20,18,14,0.75);
+    }
+
+    /* MENU PANEL */
+
+    .menu-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: var(--menu-width);
+      max-width: 100%;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 999;
+    }
+
+    body.menu-open .menu-panel {
+      transform: translateX(0);
+    }
+
+    /* Decorative scallop illusion */
+
+    .menu-card {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
+
+      background: rgba(255, 250, 235, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      border: 3px solid rgba(214,178,92,0.95);
+
+      padding: 30px;
+      color: var(--menu-text);
+
+      overflow-y: auto;
+
+      border-radius: 45px 45px 60px 60px / 55px 55px 75px 75px;
+
+      box-shadow:
+        0 0 25px rgba(214,178,92,0.35),
+        inset 0 0 30px rgba(255,255,255,0.3);
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-close {
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.2);
+      background: rgba(255,255,255,0.5);
+    }
+
+    .menu-links {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: left;
+    }
+
+    .menu-links a {
+      text-decoration: none;
+      color: var(--menu-text);
+      font-size: 1.1rem;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    .menu-links a:hover {
+      background: rgba(255,255,255,0.45);
+    }
+
+    /* Mobile */
+
+    @media (max-width: 700px) {
+
+      .menu-panel {
+        width: 100%;
+      }
+
+      #forest-countdown {
+        gap: 18px;
+        padding: 14px 16px;
+      }
+
+      .time-block span {
+        font-size: 1.8rem;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="menu-toggle" id="menuToggle">
+    ☰ MENU
+  </div>
+
+  <div class="center-text">
+    <div>You are welcome here.</div>
+    <div class="sub">The forest awaits.</div>
+  </div>
+
+  <div id="forest-countdown">
+
+    <div class="time-block">
+      <span id="days">0</span>
+      <label>Days</label>
+    </div>
+
+    <div class="time-block">
+      <span id="hours">0</span>
+      <label>Hours</label>
+    </div>
+
+    <div class="time-block">
+      <span id="minutes">0</span>
+      <label>Minutes</label>
+    </div>
+
+    <div class="time-block">
+      <span id="seconds">0</span>
+      <label>Seconds</label>
+    </div>
+
+  </div>
+
+  <aside class="menu-panel" id="menuPanel">
+
+    <div class="menu-card">
+
+      <div class="menu-header">
+        <div>Explore</div>
+        <button class="menu-close" id="menuClose">Close</button>
+      </div>
+
+      <nav class="menu-links">
+        <a href="details.html" data-close-menu>Details</a>
+        <a href="schedule.html" data-close-menu>Schedule</a>
+        <a href="location.html" data-close-menu>Location</a>
+        <a href="faq.html" data-close-menu>FAQ</a>
+        <a href="registry.html" data-close-menu>Registry</a>
+      </nav>
+
+    </div>
+
+  </aside>
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const body = document.body;
+      const toggle = document.getElementById("menuToggle");
+      const closeBtn = document.getElementById("menuClose");
+
+      toggle.addEventListener("click", function () {
+        body.classList.toggle("menu-open");
+      });
+
+      closeBtn.addEventListener("click", function () {
+        body.classList.remove("menu-open");
+      });
+
+      document.querySelectorAll("[data-close-menu]").forEach(link => {
+        link.addEventListener("click", function () {
+          body.classList.remove("menu-open");
+        });
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          body.classList.remove("menu-open");
+        }
+      });
+
+    });
+
+    /* COUNTDOWN */
+
+    const weddingDate = new Date("September 23, 2028 13:00:00").getTime();
+
+    function updateCountdown() {
+
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+  </script>
+
+</body>
+</html>
