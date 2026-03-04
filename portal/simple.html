@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Emily & Travis — Simple Info</title>
   <meta name="robots" content="noindex, nofollow">
+  <script>
+if (!sessionStorage.getItem("rsvpAccess")) {
+window.location.replace("../rsvp.html");
+}
+</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
@@ -18,9 +23,8 @@
 
     body {
       font-family: Georgia, serif;
-      background: url("assets/assets/backgrounds/landing.png") center / cover no-repeat;
-      color: #efe9dc;
-      line-height: 1.6;
+      background: url("../assets/assets/backgrounds/landing.png") center / cover no-repeat;
+      color: #efe9dc;      line-height: 1.6;
     }
 
     .wrap {
@@ -95,8 +99,7 @@
     </div>
 
     <div class="back">
-      <a href="landing.html">← Return to full site</a>
-    </div>
+      <a href="../landing.html">← Return to full site</a>    </div>
   </div>
 
 </body>
