@@ -9,10 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+  
+<script>
+if (!sessionStorage.getItem("rsvpAccess")) {
+  window.location.replace("../rsvp.html");
+}
+</script>
+  
   <style>
     * {
       margin: 0;
@@ -29,7 +35,7 @@
     /* Forest background with overlay */
     .forest {
       min-height: 100vh;
-      background: url("assets/assets/backgrounds/insidegate.png") center / cover no-repeat;
+      background: url("../assets/assets/backgrounds/insidegate.png") center / cover no-repeat;
       position: relative;
       padding: 5rem 1.5rem;
     }
@@ -209,13 +215,13 @@
 
 <div class="fairies">
   <div class="fairy fairy-1">
-    <img src="assets/assets/fairies/fairy3.png" alt="Fairy">
+    <img src="../assets/assets/fairies/fairy3.png" alt="Fairy">
   </div>
   <div class="fairy fairy-2">
-    <img src="assets/assets/fairies/fairy4.png" alt="Fairy">
+    <img src="../assets/assets/fairies/fairy4.png" alt="Fairy">
   </div>
   <div class="fairy fairy-3">
-    <img src="assets/assets/fairies/fairy5.png" alt="Fairy">
+    <img src="../assets/assets/fairies/fairy5.png" alt="Fairy">
   </div>
 </div>
 
@@ -246,6 +252,5 @@
   </div>
 </div>
 
-<script src="js/main.js"></script>
-</body>
+<script src="../js/main.js"></script></body>
 </html>
