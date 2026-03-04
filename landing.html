@@ -24,6 +24,7 @@
       font-family: Georgia, serif;
       text-align: center;
       overflow-x: hidden;
+      flex-direction: column;
     }
 
     .center-text {
@@ -39,7 +40,38 @@
       margin-top: 6px;
     }
 
+    /* COUNTDOWN */
+
+    #forest-countdown {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 10px;
+      padding: 18px 28px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+    }
+
+    .time-block {
+      text-align: center;
+      color: var(--gold);
+    }
+
+    .time-block span {
+      display: block;
+      font-size: 2.4rem;
+      font-weight: bold;
+    }
+
+    .time-block label {
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      opacity: 0.85;
+    }
+
     /* MENU BUTTON */
+
     .menu-toggle {
       position: fixed;
       top: 20px;
@@ -63,6 +95,7 @@
     }
 
     /* MENU PANEL */
+
     .menu-panel {
       position: fixed;
       top: 0;
@@ -79,33 +112,32 @@
       transform: translateX(0);
     }
 
-
     /* Decorative scallop illusion */
-.menu-card {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  bottom: 20px;
-  left: 20px;
 
-  background: rgba(255, 250, 235, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+    .menu-card {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
 
-  border: 3px solid rgba(214,178,92,0.95);
+      background: rgba(255, 250, 235, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
 
-  padding: 30px;
-  color: var(--menu-text);
+      border: 3px solid rgba(214,178,92,0.95);
 
-  overflow-y: auto;
+      padding: 30px;
+      color: var(--menu-text);
 
-  /* Soft scallop illusion */
-  border-radius: 45px 45px 60px 60px / 55px 55px 75px 75px;
+      overflow-y: auto;
 
-  box-shadow:
-    0 0 25px rgba(214,178,92,0.35),
-    inset 0 0 30px rgba(255,255,255,0.3);
-}
+      border-radius: 45px 45px 60px 60px / 55px 55px 75px 75px;
+
+      box-shadow:
+        0 0 25px rgba(214,178,92,0.35),
+        inset 0 0 30px rgba(255,255,255,0.3);
+    }
 
     .menu-header {
       display: flex;
@@ -143,10 +175,22 @@
     }
 
     /* Mobile */
+
     @media (max-width: 700px) {
+
       .menu-panel {
         width: 100%;
       }
+
+      #forest-countdown {
+        gap: 18px;
+        padding: 14px 16px;
+      }
+
+      .time-block span {
+        font-size: 1.8rem;
+      }
+
     }
 
   </style>
@@ -163,8 +207,34 @@
     <div class="sub">The forest awaits.</div>
   </div>
 
+  <div id="forest-countdown">
+
+    <div class="time-block">
+      <span id="days">0</span>
+      <label>Days</label>
+    </div>
+
+    <div class="time-block">
+      <span id="hours">0</span>
+      <label>Hours</label>
+    </div>
+
+    <div class="time-block">
+      <span id="minutes">0</span>
+      <label>Minutes</label>
+    </div>
+
+    <div class="time-block">
+      <span id="seconds">0</span>
+      <label>Seconds</label>
+    </div>
+
+  </div>
+
   <aside class="menu-panel" id="menuPanel">
+
     <div class="menu-card">
+
       <div class="menu-header">
         <div>Explore</div>
         <button class="menu-close" id="menuClose">Close</button>
@@ -177,10 +247,13 @@
         <a href="faq.html" data-close-menu>FAQ</a>
         <a href="registry.html" data-close-menu>Registry</a>
       </nav>
+
     </div>
+
   </aside>
 
   <script>
+
     document.addEventListener("DOMContentLoaded", function () {
 
       const body = document.body;
@@ -208,6 +281,31 @@
       });
 
     });
+
+    /* COUNTDOWN */
+
+    const weddingDate = new Date("September 23, 2028 13:00:00").getTime();
+
+    function updateCountdown() {
+
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
   </script>
 
 </body>
